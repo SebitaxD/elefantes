@@ -10,14 +10,25 @@
 
     <title>Mapa de Elefantes en Argentina</title>
 
-    <!-- Librerías -->
-    <link rel="stylesheet" href="leaflet.css" />	
+    <!-- Librerías -->	
     <script src="leaflet.js"></script>	
     <script src="jquery-1.11.3.min.js"></script>
+    <script src="L.Control.Sidebar.js"></script>
+    <script src="funciones.js"></script>	
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="leaflet.css" />
+    <link href="L.Control.Sidebar.css" rel="stylesheet">
+    <link rel="stylesheet" href="estilo.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    
+    <!-- Bootstrap -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <script type="text/javascript">
     $( document ).ready(function() {        
-        var map = L.map('mapa_area').setView(["-34.28", "-58.47"], 5);
+        var map = L.map('mapa_area').setView(["-34.28055", "-58.47250"], 5);
         var osm2 = new L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
                 {
                     minZoom: 1,
@@ -27,11 +38,33 @@
         );
 
         map.addLayer(osm2);
+        
+        var sidebar = L.control.sidebar('sidebar', {
+            position: 'right'
+        });
+        map.addControl(sidebar);
+        
+        var e1 = L.marker(["-34.908775", "-57.941756"], {icon: eleIcon}).addTo(map).on("click", function() { showInfo(sidebar, "ele1"); });
+        var e2 = L.marker(["-34.578324", "-58.414800"], {icon: eleIcon}).addTo(map).on("click", function() { showInfo(sidebar, "ele2", true); });
+        var e3 = L.marker(["-31.424357", "-64.175800"], {icon: eleIcon}).addTo(map).on("click", function() { showInfo(sidebar, "ele3"); });
+        var e4 = L.marker(["-32.887794", "-68.887951"], {icon: eleIcon}).addTo(map).on("click", function() { showInfo(sidebar, "ele4", true); });
+        var e5 = L.marker(["-34.579850", "-59.017418"], {icon: eleIcon}).addTo(map).on("click", function() { showInfo(sidebar, "ele5", true); });
+        var e6 = L.marker(["-31.278458", "-57.995833"], {icon: eleIcon}).addTo(map).on("click", function() { showInfo(sidebar, "ele6"); });
+        
+        map.fitBounds([
+            e1.getLatLng(),
+            e2.getLatLng(),
+            e3.getLatLng(),
+            e4.getLatLng(),
+            e5.getLatLng(),
+            e6.getLatLng()
+        ]);
 
         var escala = L.control.scale({
           metric: true,
           imperial: false
         }).addTo(map);
+        
     });   
 </script>
 
@@ -39,9 +72,155 @@
 
   <body>
       
-    <div class="container">
+    <div class="main">
 
         <div id="mapa_area" style="height: 800px;"></div>
+        <div id="sidebar"></div>
+        
+        <div id="ele1" class="oculto">
+            <h3>Zoológico de La Plata</h3>
+            <p>Avenida 52 y 118 S/N, BS AS.</p>
+            <p><strong>Pelusa  (Elephas maximus)</strong></p>
+            <p>Sexo: <i class="fa fa-venus"></i></p>
+            <p>Edad : 49 años</p>
+            <p>Procedencia: Zoológico de Alemania</p>
+            <img src="elefantes_img/Pelusa- La plata.jpg" alt="Pelusa" width="400">
+        </div>
+        
+        <div id="ele2" class="oculto">
+            <h3>Zoológico de Buenos Aires</h3>
+            <p>República de la India 3000, Ciudad autónoma de Bs. As</p>
+            <p>Web: <a href="http://www.zoobuenosaires.com.ar/" target="_blank">http://www.zoobuenosaires.com.ar/</a></p>
+            
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" id="tabs">
+              <li class="active"><a href="#mara" role="tab">Mara</a></li>
+              <li><a href="#kuky" role="tab">Kuky</a></li>
+              <li><a href="#pupy" role="tab">Pupy</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="mara">
+                  <p><strong>Mara  (Elephas maximus)</strong></p>
+                  <p>Sexo: <i class="fa fa-venus"></i></p>
+                  <p>Edad : 46 años</p>
+                  <p>Procedencia: Circo Rodas</p>
+                  <img src="elefantes_img/Mara- Bs As.JPG" alt="Mara" width="400">
+                </div>
+                <div class="tab-pane" id="kuky">
+                  <p><strong>Kuky  (Loxodonta africana)</strong></p>
+                  <p>Sexo: <i class="fa fa-venus"></i></p>
+                  <p>Edad : 25 años</p>
+                  <p>Procedencia: Parque Nacional Etosha (Namibia)</p>
+                  <img src="elefantes_img/Kuky- Bs As.JPG" alt="Kuky" width="400">
+                </div>
+                <div class="tab-pane" id="pupy">
+                  <p><strong>Pupy  (Loxodonta africana)</strong></p>
+                  <p>Sexo: <i class="fa fa-venus"></i></p>
+                  <p>Edad : 25 años</p>
+                  <p>Procedencia: Parque Nacional Etosha (Namibia)</p>
+                  <img src="elefantes_img/Pupy- Bs As.JPG" alt="Mara" width="400">
+                </div>
+            </div>
+        </div>
+        
+        <div id="ele3" class="oculto">
+            <h3>Zoológico de Córdoba</h3>
+            <p>Rondeau 798, Córdoba</p>
+            <p>Web: <a href="http://www.zoo-cordoba.com.ar/" target="_blank">http://www.zoo-cordoba.com.ar/</a></p>
+            <p><strong>Taruca  (Elephas maximus)</strong></p>
+            <p>Sexo: <i class="fa fa-venus"></i></p>
+            <p>Edad : aprox. 73 años - fallecida en 2013</p>
+            <p>Procedencia: Orlando Orfei</p>
+            <p>Vivió los últimos 21 años en el zoológico de Córdoba</p>
+            <img src="elefantes_img/Taruca.jpg" alt="Taruca" width="400">
+        </div>
+        
+        <div id="ele4" class="oculto">
+            <h3>Zoológico de Mendoza</h3>
+            <p>Av Libertador s/n- Parque General San Martín, Mendoza, Argentina</p>
+            <p>Web: <a href="http://www.zoo.mendoza.gov.ar/" target="_blank">http://www.zoo.mendoza.gov.ar/</a></p>
+            
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" id="tabs">
+              <li class="active"><a href="#pocha" role="tab">Pocha</a></li>
+              <li><a href="#tamy" role="tab">Tamy</a></li>
+              <li><a href="#guillermina" role="tab">Guillermina</a></li>
+              <li><a href="#kenya" role="tab">Kenya</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="pocha">
+                  <p><strong>Pocha  (Elephas maximus)</strong></p>
+                  <p>Sexo: <i class="fa fa-venus"></i></p>
+                  <p>Edad : 48 años</p>
+                  <img src="elefantes_img/pocha.jpg" alt="Pocha" width="400">
+                </div>
+                <div class="tab-pane" id="tamy">
+                  <p><strong>Tamy  (Elephas maximus)</strong></p>
+                  <p>Sexo: <i class="fa fa-mars"></i></p>
+                  <p>Edad : 34 años</p>
+                  <p>Procedencia: Circo Gasca</p>
+                  <img src="elefantes_img/Tamy- Mendoza.jpg" alt="Tamy" width="400">
+                </div>
+                <div class="tab-pane" id="guillermina">
+                  <p><strong>Guillermina  (Elephas maximus)</strong></p>
+                  <p>Sexo: <i class="fa fa-venus"></i></p>
+                  <p>Edad : 15 años</p>
+                  <p>Procedencia: nació en el zoo, es hija de Pocha y Tamy</p>
+                  <img src="elefantes_img/guillermina.jpg" alt="Guillermina" width="400">
+                </div>
+                <div class="tab-pane" id="kenya">
+                  <p><strong>Kenya  (Loxodonta africana)</strong></p>
+                  <p>Sexo: <i class="fa fa-venus"></i></p>
+                  <p>Edad : 34 años</p>
+                  <p>Procedencia: Alemania</p>
+                  <img src="elefantes_img/Kenia- mendoza.jpg" alt="Kenya" width="400">
+                </div>
+            </div>
+        </div>
+        
+        <div id="ele5" class="oculto">
+            <h3>Zoológico de Luján</h3>
+            <p>Acceso Oeste Km 58, Luján, Buenos Aires- Argentina</p>
+            <p>Web: <a href="http://www.zoolujan.com" target="_blank">http://www.zoolujan.com</a></p>
+            
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" id="tabs">
+              <li class="active"><a href="#arly" role="tab">Arly</a></li>
+              <li><a href="#sharima" role="tab">Sharima</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="arly">
+                  <p><strong>Arly  (Elephas maximus sumatrensis)</strong></p>
+                  <p>Sexo: <i class="fa fa-venus"></i></p>
+                  <p>Edad : 19 años, 1996- 2015 - fallecida</p>
+                  <p>Procedencia: Zoológico de Ragunan, Indonesia</p>
+                  <img src="elefantes_img/ARLY- Lujan.jpg" alt="Arly" width="400">
+                </div>
+                <div class="tab-pane" id="sharima">
+                  <p><strong>Sharima  (Elephas maximus sumatrensis)</strong></p>
+                  <p>Sexo: <i class="fa fa-venus"></i></p>
+                  <p>Edad : 20 años</p>
+                  <p>Procedencia: Zoológico de Ragunan, Indonesia</p>
+                  <img src="elefantes_img/SHARIMA-Lujan.jpg" alt="Sharima" width="400">
+                </div>
+            </div>
+        </div>
+        
+        <div id="ele6" class="oculto">
+            <h3>El Arca de Enrimir</h3>
+            <p>Ruta Nac 015 Acceso Represa Salto Grande- Concordia, Entre Ríos</p>
+            <p><strong>Merry  (Elephas maximus)</strong></p>
+            <p>Sexo: <i class="fa fa-venus"></i></p>
+            <p>Edad : 47 años</p>
+            <p>Procedencia: trabajó en el circo de los Hermanos Tejedor</p>
+            <img src="elefantes_img/MERRY- Entre Rios.jpg" alt="Merry" width="400">
+        </div>
 
     </div><!-- /.container -->
     
